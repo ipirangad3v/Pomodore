@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">Pomodore</string>
+
+    <!-- Timer States -->
+    <string name="work_session">कार्य सत्र</string>
+    <string name="short_break">छोटा विराम</string>
+    <string name="long_break">लंबा विराम</string>
+
+    <!-- Actions -->
+    <string name="start">शुरू करें</string>
+    <string name="pause">रोकें</string>
+    <string name="resume">जारी रखें</string>
+    <string name="stop">बंद करें</string>
+    <string name="skip">छोड़ें</string>
+    <string name="reset">रीसेट करें</string>
+
+    <!-- Session Counter -->
+    <string name="session_count">सत्र %1$d में से 4</string>
+    <string name="completed_sessions">पूर्ण: %1$d</string>
+
+    <!-- Settings -->
+    <string name="settings">सेटिंग्स</string>
+    <string name="work_duration">कार्य अवधि</string>
+    <string name="short_break_duration">छोटे विराम की अवधि</string>
+    <string name="long_break_duration">लंबे विराम की अवधि</string>
+    <string name="minutes">मिनट</string>
+    <string name="sessions_until_long_break">लंबे विराम तक के सत्र</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_name">पोमोडोरो टाइमर</string>
+    <string name="notification_channel_description">वर्तमान पोमोडोरो टाइमर स्थिति दिखाता है</string>
+    <string name="notification_title_work">काम कर रहे हैं…</string>
+    <string name="notification_title_short_break">छोटा विराम</string>
+    <string name="notification_title_long_break">लंबा विराम</string>
+    <string name="notification_time_remaining">%1$s शेष</string>
+    <string name="notification_paused">रोका गया</string>
+    <string name="notification_action_pause">रोकें</string>
+    <string name="notification_action_resume">जारी रखें</string>
+    <string name="notification_action_skip">छोड़ें</string>
+
+    <!-- Completion Messages -->
+    <string name="work_completed">बहुत बढ़िया! विश्राम का समय।</string>
+    <string name="break_completed">विराम समाप्त! ध्यान केंद्रित करने के लिए तैयार?</string>
+    <string name="long_break_completed">लंबा विराम समाप्त! नया चक्र शुरू करें?</string>
+</resources>
+

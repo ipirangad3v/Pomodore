@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">Pomodore</string>
+
+    <!-- Timer States -->
+    <string name="work_session">作業セッション</string>
+    <string name="short_break">短い休憩</string>
+    <string name="long_break">長い休憩</string>
+
+    <!-- Actions -->
+    <string name="start">開始</string>
+    <string name="pause">一時停止</string>
+    <string name="resume">再開</string>
+    <string name="stop">停止</string>
+    <string name="skip">スキップ</string>
+    <string name="reset">リセット</string>
+
+    <!-- Session Counter -->
+    <string name="session_count">セッション %1$d / 4</string>
+    <string name="completed_sessions">完了: %1$d</string>
+
+    <!-- Settings -->
+    <string name="settings">設定</string>
+    <string name="work_duration">作業時間</string>
+    <string name="short_break_duration">短い休憩時間</string>
+    <string name="long_break_duration">長い休憩時間</string>
+    <string name="minutes">分</string>
+    <string name="sessions_until_long_break">長い休憩までのセッション</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_name">ポモドーロタイマー</string>
+    <string name="notification_channel_description">現在のポモドーロタイマーの状態を表示します</string>
+    <string name="notification_title_work">作業中…</string>
+    <string name="notification_title_short_break">短い休憩</string>
+    <string name="notification_title_long_break">長い休憩</string>
+    <string name="notification_time_remaining">残り %1$s</string>
+    <string name="notification_paused">一時停止中</string>
+    <string name="notification_action_pause">一時停止</string>
+    <string name="notification_action_resume">再開</string>
+    <string name="notification_action_skip">スキップ</string>
+
+    <!-- Completion Messages -->
+    <string name="work_completed">お疲れ様です！休憩の時間です。</string>
+    <string name="break_completed">休憩終了！集中する準備はできましたか？</string>
+    <string name="long_break_completed">長い休憩が終了しました！新しいサイクルを始めますか？</string>
+</resources>
+

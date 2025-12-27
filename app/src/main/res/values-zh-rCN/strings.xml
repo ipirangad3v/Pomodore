@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">Pomodore</string>
+
+    <!-- Timer States -->
+    <string name="work_session">工作时间</string>
+    <string name="short_break">短休息</string>
+    <string name="long_break">长休息</string>
+
+    <!-- Actions -->
+    <string name="start">开始</string>
+    <string name="pause">暂停</string>
+    <string name="resume">继续</string>
+    <string name="stop">停止</string>
+    <string name="skip">跳过</string>
+    <string name="reset">重置</string>
+
+    <!-- Session Counter -->
+    <string name="session_count">第 %1$d 个会话，共 4 个</string>
+    <string name="completed_sessions">已完成：%1$d</string>
+
+    <!-- Settings -->
+    <string name="settings">设置</string>
+    <string name="work_duration">工作时长</string>
+    <string name="short_break_duration">短休息时长</string>
+    <string name="long_break_duration">长休息时长</string>
+    <string name="minutes">分钟</string>
+    <string name="sessions_until_long_break">长休息前的会话数</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_name">番茄钟计时器</string>
+    <string name="notification_channel_description">显示当前番茄钟计时器状态</string>
+    <string name="notification_title_work">工作中…</string>
+    <string name="notification_title_short_break">短休息</string>
+    <string name="notification_title_long_break">长休息</string>
+    <string name="notification_time_remaining">剩余 %1$s</string>
+    <string name="notification_paused">已暂停</string>
+    <string name="notification_action_pause">暂停</string>
+    <string name="notification_action_resume">继续</string>
+    <string name="notification_action_skip">跳过</string>
+
+    <!-- Completion Messages -->
+    <string name="work_completed">干得好！该休息了。</string>
+    <string name="break_completed">休息结束！准备好专注了吗？</string>
+    <string name="long_break_completed">长休息结束！开始新的周期？</string>
+</resources>
+

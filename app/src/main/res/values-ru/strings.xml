@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">Pomodore</string>
+
+    <!-- Timer States -->
+    <string name="work_session">Рабочая сессия</string>
+    <string name="short_break">Короткий перерыв</string>
+    <string name="long_break">Длинный перерыв</string>
+
+    <!-- Actions -->
+    <string name="start">Старт</string>
+    <string name="pause">Пауза</string>
+    <string name="resume">Продолжить</string>
+    <string name="stop">Стоп</string>
+    <string name="skip">Пропустить</string>
+    <string name="reset">Сброс</string>
+
+    <!-- Session Counter -->
+    <string name="session_count">Сессия %1$d из 4</string>
+    <string name="completed_sessions">Завершено: %1$d</string>
+
+    <!-- Settings -->
+    <string name="settings">Настройки</string>
+    <string name="work_duration">Продолжительность работы</string>
+    <string name="short_break_duration">Продолжительность короткого перерыва</string>
+    <string name="long_break_duration">Продолжительность длинного перерыва</string>
+    <string name="minutes">минут</string>
+    <string name="sessions_until_long_break">Сессий до длинного перерыва</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_name">Таймер Помодоро</string>
+    <string name="notification_channel_description">Показывает текущее состояние таймера Помодоро</string>
+    <string name="notification_title_work">Работа…</string>
+    <string name="notification_title_short_break">Короткий перерыв</string>
+    <string name="notification_title_long_break">Длинный перерыв</string>
+    <string name="notification_time_remaining">%1$s осталось</string>
+    <string name="notification_paused">На паузе</string>
+    <string name="notification_action_pause">Пауза</string>
+    <string name="notification_action_resume">Продолжить</string>
+    <string name="notification_action_skip">Пропустить</string>
+
+    <!-- Completion Messages -->
+    <string name="work_completed">Отличная работа! Время отдохнуть.</string>
+    <string name="break_completed">Перерыв окончен! Готовы сосредоточиться?</string>
+    <string name="long_break_completed">Длинный перерыв завершён! Начать новый цикл?</string>
+</resources>
+

@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">Pomodore</string>
+
+    <!-- Timer States -->
+    <string name="work_session">جلسة عمل</string>
+    <string name="short_break">استراحة قصيرة</string>
+    <string name="long_break">استراحة طويلة</string>
+
+    <!-- Actions -->
+    <string name="start">ابدأ</string>
+    <string name="pause">إيقاف مؤقت</string>
+    <string name="resume">استئناف</string>
+    <string name="stop">إيقاف</string>
+    <string name="skip">تخطي</string>
+    <string name="reset">إعادة تعيين</string>
+
+    <!-- Session Counter -->
+    <string name="session_count">الجلسة %1$d من 4</string>
+    <string name="completed_sessions">مكتملة: %1$d</string>
+
+    <!-- Settings -->
+    <string name="settings">الإعدادات</string>
+    <string name="work_duration">مدة العمل</string>
+    <string name="short_break_duration">مدة الاستراحة القصيرة</string>
+    <string name="long_break_duration">مدة الاستراحة الطويلة</string>
+    <string name="minutes">دقائق</string>
+    <string name="sessions_until_long_break">الجلسات حتى الاستراحة الطويلة</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_name">مؤقت بومودورو</string>
+    <string name="notification_channel_description">يعرض حالة مؤقت بومودورو الحالية</string>
+    <string name="notification_title_work">العمل جارٍ…</string>
+    <string name="notification_title_short_break">استراحة قصيرة</string>
+    <string name="notification_title_long_break">استراحة طويلة</string>
+    <string name="notification_time_remaining">%1$s متبقية</string>
+    <string name="notification_paused">متوقف مؤقتاً</string>
+    <string name="notification_action_pause">إيقاف مؤقت</string>
+    <string name="notification_action_resume">استئناف</string>
+    <string name="notification_action_skip">تخطي</string>
+
+    <!-- Completion Messages -->
+    <string name="work_completed">عمل رائع! حان وقت الاستراحة.</string>
+    <string name="break_completed">انتهت الاستراحة! مستعد للتركيز؟</string>
+    <string name="long_break_completed">انتهت الاستراحة الطويلة! بدء دورة جديدة؟</string>
+</resources>
+

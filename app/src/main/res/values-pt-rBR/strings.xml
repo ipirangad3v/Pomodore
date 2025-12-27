@@ -1,0 +1,52 @@
+<resources>
+    <string name="app_name">Pomodore</string>
+
+    <!-- Timer States -->
+    <string name="work_session">Sessão de Trabalho</string>
+    <string name="short_break">Pausa Curta</string>
+    <string name="long_break">Pausa Longa</string>
+
+    <!-- Actions -->
+    <string name="start">Iniciar</string>
+    <string name="pause">Pausar</string>
+    <string name="resume">Retomar</string>
+    <string name="stop">Parar</string>
+    <string name="skip">Pular</string>
+    <string name="reset">Reiniciar</string>
+
+    <!-- Session Counter -->
+    <string name="session_count">Sessão %1$d de %2$d</string>
+    <string name="completed_sessions">Completadas: %1$d</string>
+
+    <!-- Settings -->
+    <string name="settings">Configurações</string>
+    <string name="settings_locked">Configurações bloqueadas enquanto o timer está ativo</string>
+    <string name="stop_timer_to_edit">Pare ou complete o timer para editar configurações</string>
+    <string name="work_duration">Duração do Trabalho</string>
+    <string name="short_break_duration">Duração da Pausa Curta</string>
+    <string name="long_break_duration">Duração da Pausa Longa</string>
+    <string name="minutes">minutos</string>
+    <string name="sessions_until_long_break">Sessões até pausa longa</string>
+    <string name="total_cycles">Total de sessões de trabalho</string>
+    <string name="save">Salvar</string>
+    <string name="cancel">Cancelar</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_name">Temporizador Pomodoro</string>
+    <string name="notification_channel_description">Mostra o status atual do temporizador Pomodoro</string>
+    <string name="notification_title_work">Trabalhando…</string>
+    <string name="notification_title_short_break">Pausa Curta</string>
+    <string name="notification_title_long_break">Pausa Longa</string>
+    <string name="notification_time_remaining">%1$s restante</string>
+    <string name="notification_paused">Pausado</string>
+    <string name="notification_action_pause">Pausar</string>
+    <string name="notification_action_resume">Retomar</string>
+    <string name="notification_action_skip">Pular</string>
+
+    <!-- Completion Messages -->
+    <string name="work_completed">Ótimo trabalho! Hora de descansar.</string>
+    <string name="break_completed">Pausa terminada! Pronto para focar?</string>
+    <string name="long_break_completed">Pausa longa finalizada! Iniciar um novo ciclo?</string>
+    <string name="all_cycles_completed">Parabéns!\nVocê completou todos os ciclos!</string>
+</resources>
+
