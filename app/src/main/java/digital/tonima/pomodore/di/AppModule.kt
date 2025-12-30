@@ -7,11 +7,13 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import digital.tonima.pomodore.data.repository.PomodoroRepository
+import digital.tonima.pomodore.util.SoundAndVibrationManager
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AppModule {
+object
+AppModule {
 
     @Provides
     @Singleton
@@ -19,6 +21,14 @@ object AppModule {
         @ApplicationContext context: Context
     ): PomodoroRepository {
         return PomodoroRepository(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSoundAndVibrationManager(
+        @ApplicationContext context: Context
+    ): SoundAndVibrationManager {
+        return SoundAndVibrationManager(context)
     }
 }
 

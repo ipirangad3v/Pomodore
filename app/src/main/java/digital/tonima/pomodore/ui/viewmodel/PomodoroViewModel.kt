@@ -1,13 +1,14 @@
 package digital.tonima.pomodore.ui.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import digital.tonima.pomodore.data.model.PomodoroSettings
 import digital.tonima.pomodore.data.model.PomodoroUiState
 import digital.tonima.pomodore.data.model.TimerMode
 import digital.tonima.pomodore.data.model.TimerState
 import digital.tonima.pomodore.data.repository.PomodoroRepository
+import digital.tonima.pomodore.util.SoundAndVibrationManager
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,10 +16,13 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class PomodoroViewModel(application: Application) : AndroidViewModel(application) {
-
-    private val repository = PomodoroRepository(application)
+@HiltViewModel
+class PomodoroViewModel @Inject constructor(
+    private val repository: PomodoroRepository,
+    private val soundAndVibrationManager: SoundAndVibrationManager
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(PomodoroUiState())
     val uiState: StateFlow<PomodoroUiState> = _uiState.asStateFlow()
@@ -153,6 +157,7 @@ class PomodoroViewModel(application: Application) : AndroidViewModel(application
 
     fun completeTimer() {
         val currentState = _uiState.value
+        soundAndVibrationManager.notifyTimerComplete()
 
         when (val state = currentState.timerState) {
             is TimerState.Running -> {
@@ -236,5 +241,6 @@ class PomodoroViewModel(application: Application) : AndroidViewModel(application
     override fun onCleared() {
         super.onCleared()
         timerJob?.cancel()
+        soundAndVibrationManager.release()
     }
 }
