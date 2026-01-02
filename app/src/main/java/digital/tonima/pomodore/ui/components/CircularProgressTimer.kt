@@ -15,9 +15,15 @@ fun CircularProgressTimer(
     color: Color = MaterialTheme.colorScheme.primary,
     trackColor: Color = MaterialTheme.colorScheme.surfaceVariant
 ) {
+    val finalModifier = if (modifier == Modifier) {
+        Modifier.size(280.dp)
+    } else {
+        modifier
+    }
+
     CircularProgressIndicator(
         progress = { progress },
-        modifier = modifier.size(280.dp),
+        modifier = finalModifier,
         strokeWidth = 12.dp,
         color = color,
         trackColor = trackColor,

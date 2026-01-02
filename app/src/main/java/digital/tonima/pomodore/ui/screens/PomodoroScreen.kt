@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -38,6 +39,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -53,6 +55,7 @@ import digital.tonima.pomodore.ui.components.PomodoroButton
 import digital.tonima.pomodore.ui.components.SessionCounter
 import digital.tonima.pomodore.ui.components.TimerDisplay
 import digital.tonima.pomodore.ui.theme.getModeColors
+import digital.tonima.pomodore.ui.theme.ModeColors
 import kotlinx.coroutines.delay
 
 @Composable
@@ -68,6 +71,10 @@ fun PomodoroScreen(
     hasNotificationPermission: Boolean,
     modifier: Modifier = Modifier
 ) {
+    val configuration = LocalConfiguration.current
+    @Suppress("DEPRECATION")
+    val isLandscape = configuration.screenWidthDp > configuration.screenHeightDp
+
     val currentMode = when (val state = uiState.timerState) {
         is TimerState.Running -> state.mode
         is TimerState.Paused -> state.mode
@@ -121,150 +128,34 @@ fun PomodoroScreen(
                     )
                 )
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(24.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.SpaceBetween
-            ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier.padding(top = 32.dp)
-                    ) {
-                        Box(
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            IconButton(
-                                onClick = onSettingsClick,
-                                modifier = Modifier.align(Alignment.TopEnd),
-                                enabled = !isTimerActive
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Default.Settings,
-                                    contentDescription = stringResource(R.string.settings),
-                                    tint = if (isTimerActive)
-                                        animatedPrimaryColor.copy(alpha = 0.3f)
-                                    else
-                                        animatedPrimaryColor
-                                )
-                            }
-                        }
-
-                        Text(
-                            text = when (val state = uiState.timerState) {
-                                is TimerState.Running -> getModeString(state.mode)
-                                is TimerState.Paused -> getModeString(state.mode)
-                                is TimerState.Completed -> getModeString(state.mode)
-                                else -> stringResource(R.string.work_session)
-                            },
-                            style = MaterialTheme.typography.headlineMedium.copy(
-                                fontWeight = FontWeight.SemiBold
-                            ),
-                            color = animatedPrimaryColor
-                        )
-
-                        Spacer(modifier = Modifier.height(8.dp))
-
-                        SessionCounter(
-                            currentSession = uiState.currentSession,
-                            completedSessions = uiState.completedSessions,
-                            totalCycles = uiState.settings.totalCycles,
-                            color = animatedPrimaryColor
-                        )
-                    }
-
-                    if (!hasNotificationPermission) {
-                        Spacer(modifier = Modifier.height(16.dp))
-                        PermissionWarningBanner()
-                    }
-                }
-
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier.weight(1f)
-                ) {
-                    val (progress, timeRemaining) = when (val state = uiState.timerState) {
-                        is TimerState.Running -> {
-                            Pair(
-                                1f - (state.timeRemainingMillis.toFloat() / state.totalTimeMillis.toFloat()),
-                                state.timeRemainingMillis
-                            )
-                        }
-                        is TimerState.Paused -> {
-                            Pair(
-                                1f - (state.timeRemainingMillis.toFloat() / state.totalTimeMillis.toFloat()),
-                                state.timeRemainingMillis
-                            )
-                        }
-                        else -> Pair(0f, 0L)
-                    }
-
-                    CircularProgressTimer(
-                        progress = progress,
-                        color = animatedPrimaryColor,
-                        trackColor = modeColors.accent.copy(alpha = 0.3f)
-                    )
-                    TimerDisplay(
-                        timeRemainingMillis = timeRemaining,
-                        color = animatedPrimaryColor
-                    )
-                }
-
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
-                    modifier = Modifier.padding(bottom = 32.dp)
-                ) {
-                    when (uiState.timerState) {
-                        is TimerState.Idle, is TimerState.Completed -> {
-                            PomodoroButton(
-                                text = stringResource(R.string.start),
-                                onClick = onStartClick,
-                                modifier = Modifier.fillMaxWidth(0.6f),
-                                backgroundColor = animatedPrimaryColor
-                            )
-                        }
-                        is TimerState.Running -> {
-                            Row(
-                                horizontalArrangement = Arrangement.spacedBy(16.dp)
-                            ) {
-                                PomodoroButton(
-                                    text = stringResource(R.string.pause),
-                                    onClick = onPauseClick,
-                                    backgroundColor = animatedPrimaryColor
-                                )
-                                PomodoroButton(
-                                    text = stringResource(R.string.skip),
-                                    onClick = onSkipClick,
-                                    isPrimary = false,
-                                    backgroundColor = modeColors.secondary
-                                )
-                            }
-                        }
-                        is TimerState.Paused -> {
-                            Row(
-                                horizontalArrangement = Arrangement.spacedBy(16.dp)
-                            ) {
-                                PomodoroButton(
-                                    text = stringResource(R.string.resume),
-                                    onClick = onResumeClick,
-                                    backgroundColor = animatedPrimaryColor
-                                )
-                                PomodoroButton(
-                                    text = stringResource(R.string.stop),
-                                    onClick = onStopClick,
-                                    isPrimary = false,
-                                    backgroundColor = modeColors.secondary
-                                )
-                            }
-                        }
-                    }
-                }
+            if (isLandscape) {
+                PomodoroLandscapeLayout(
+                    uiState = uiState,
+                    modeColors = modeColors,
+                    animatedPrimaryColor = animatedPrimaryColor,
+                    isTimerActive = isTimerActive,
+                    onSettingsClick = onSettingsClick,
+                    onStartClick = onStartClick,
+                    onPauseClick = onPauseClick,
+                    onResumeClick = onResumeClick,
+                    onStopClick = onStopClick,
+                    onSkipClick = onSkipClick,
+                    hasNotificationPermission = hasNotificationPermission
+                )
+            } else {
+                PomodoroPortraitLayout(
+                    uiState = uiState,
+                    modeColors = modeColors,
+                    animatedPrimaryColor = animatedPrimaryColor,
+                    isTimerActive = isTimerActive,
+                    onSettingsClick = onSettingsClick,
+                    onStartClick = onStartClick,
+                    onPauseClick = onPauseClick,
+                    onResumeClick = onResumeClick,
+                    onStopClick = onStopClick,
+                    onSkipClick = onSkipClick,
+                    hasNotificationPermission = hasNotificationPermission
+                )
             }
         }
 
@@ -272,6 +163,329 @@ fun PomodoroScreen(
             CelebrationAnimation(
                 message = stringResource(R.string.all_cycles_completed)
             )
+        }
+    }
+}
+
+@Composable
+private fun PomodoroPortraitLayout(
+    uiState: PomodoroUiState,
+    modeColors: ModeColors,
+    animatedPrimaryColor: Color,
+    isTimerActive: Boolean,
+    onSettingsClick: () -> Unit,
+    onStartClick: () -> Unit,
+    onPauseClick: () -> Unit,
+    onResumeClick: () -> Unit,
+    onStopClick: () -> Unit,
+    onSkipClick: () -> Unit,
+    hasNotificationPermission: Boolean
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceBetween
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.padding(top = 32.dp)
+            ) {
+                Box(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    IconButton(
+                        onClick = onSettingsClick,
+                        modifier = Modifier.align(Alignment.TopEnd),
+                        enabled = !isTimerActive
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Settings,
+                            contentDescription = stringResource(R.string.settings),
+                            tint = if (isTimerActive)
+                                animatedPrimaryColor.copy(alpha = 0.3f)
+                            else
+                                animatedPrimaryColor
+                        )
+                    }
+                }
+
+                Text(
+                    text = when (val state = uiState.timerState) {
+                        is TimerState.Running -> getModeString(state.mode)
+                        is TimerState.Paused -> getModeString(state.mode)
+                        is TimerState.Completed -> getModeString(state.mode)
+                        else -> stringResource(R.string.work_session)
+                    },
+                    style = MaterialTheme.typography.headlineMedium.copy(
+                        fontWeight = FontWeight.SemiBold
+                    ),
+                    color = animatedPrimaryColor
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                SessionCounter(
+                    currentSession = uiState.currentSession,
+                    completedSessions = uiState.completedSessions,
+                    totalCycles = uiState.settings.totalCycles,
+                    color = animatedPrimaryColor
+                )
+            }
+
+            if (!hasNotificationPermission) {
+                Spacer(modifier = Modifier.height(16.dp))
+                PermissionWarningBanner()
+            }
+        }
+
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.weight(1f)
+        ) {
+            val (progress, timeRemaining) = when (val state = uiState.timerState) {
+                is TimerState.Running -> {
+                    Pair(
+                        1f - (state.timeRemainingMillis.toFloat() / state.totalTimeMillis.toFloat()),
+                        state.timeRemainingMillis
+                    )
+                }
+                is TimerState.Paused -> {
+                    Pair(
+                        1f - (state.timeRemainingMillis.toFloat() / state.totalTimeMillis.toFloat()),
+                        state.timeRemainingMillis
+                    )
+                }
+                else -> Pair(0f, 0L)
+            }
+
+            CircularProgressTimer(
+                progress = progress,
+                color = animatedPrimaryColor,
+                trackColor = modeColors.accent.copy(alpha = 0.3f)
+            )
+            TimerDisplay(
+                timeRemainingMillis = timeRemaining,
+                color = animatedPrimaryColor
+            )
+        }
+
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            modifier = Modifier.padding(bottom = 32.dp)
+        ) {
+            TimerControlButtons(
+                uiState = uiState,
+                animatedPrimaryColor = animatedPrimaryColor,
+                modeColors = modeColors,
+                onStartClick = onStartClick,
+                onPauseClick = onPauseClick,
+                onResumeClick = onResumeClick,
+                onStopClick = onStopClick,
+                onSkipClick = onSkipClick
+            )
+        }
+    }
+}
+
+@Composable
+private fun PomodoroLandscapeLayout(
+    uiState: PomodoroUiState,
+    modeColors: ModeColors,
+    animatedPrimaryColor: Color,
+    isTimerActive: Boolean,
+    onSettingsClick: () -> Unit,
+    onStartClick: () -> Unit,
+    onPauseClick: () -> Unit,
+    onResumeClick: () -> Unit,
+    onStopClick: () -> Unit,
+    onSkipClick: () -> Unit,
+    hasNotificationPermission: Boolean
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxHeight()
+        ) {
+            val (progress, timeRemaining) = when (val state = uiState.timerState) {
+                is TimerState.Running -> {
+                    Pair(
+                        1f - (state.timeRemainingMillis.toFloat() / state.totalTimeMillis.toFloat()),
+                        state.timeRemainingMillis
+                    )
+                }
+                is TimerState.Paused -> {
+                    Pair(
+                        1f - (state.timeRemainingMillis.toFloat() / state.totalTimeMillis.toFloat()),
+                        state.timeRemainingMillis
+                    )
+                }
+                else -> Pair(0f, 0L)
+            }
+
+            CircularProgressTimer(
+                progress = progress,
+                color = animatedPrimaryColor,
+                trackColor = modeColors.accent.copy(alpha = 0.3f),
+                modifier = Modifier.size(180.dp)
+            )
+            TimerDisplay(
+                timeRemainingMillis = timeRemaining,
+                color = animatedPrimaryColor
+            )
+        }
+
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxHeight(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceBetween
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.padding(top = 8.dp)
+            ) {
+                Box(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    IconButton(
+                        onClick = onSettingsClick,
+                        modifier = Modifier.align(Alignment.TopEnd),
+                        enabled = !isTimerActive
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Settings,
+                            contentDescription = stringResource(R.string.settings),
+                            tint = if (isTimerActive)
+                                animatedPrimaryColor.copy(alpha = 0.3f)
+                            else
+                                animatedPrimaryColor,
+                            modifier = Modifier.size(20.dp)
+                        )
+                    }
+                }
+
+                Text(
+                    text = when (val state = uiState.timerState) {
+                        is TimerState.Running -> getModeString(state.mode)
+                        is TimerState.Paused -> getModeString(state.mode)
+                        is TimerState.Completed -> getModeString(state.mode)
+                        else -> stringResource(R.string.work_session)
+                    },
+                    style = MaterialTheme.typography.headlineSmall.copy(
+                        fontWeight = FontWeight.SemiBold
+                    ),
+                    color = animatedPrimaryColor
+                )
+
+                Spacer(modifier = Modifier.height(4.dp))
+
+                SessionCounter(
+                    currentSession = uiState.currentSession,
+                    completedSessions = uiState.completedSessions,
+                    totalCycles = uiState.settings.totalCycles,
+                    color = animatedPrimaryColor
+                )
+            }
+
+            if (!hasNotificationPermission) {
+                PermissionWarningBanner()
+            }
+
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+                modifier = Modifier.padding(bottom = 8.dp)
+            ) {
+                TimerControlButtons(
+                    uiState = uiState,
+                    animatedPrimaryColor = animatedPrimaryColor,
+                    modeColors = modeColors,
+                    onStartClick = onStartClick,
+                    onPauseClick = onPauseClick,
+                    onResumeClick = onResumeClick,
+                    onStopClick = onStopClick,
+                    onSkipClick = onSkipClick
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun TimerControlButtons(
+    uiState: PomodoroUiState,
+    animatedPrimaryColor: Color,
+    modeColors: ModeColors,
+    onStartClick: () -> Unit,
+    onPauseClick: () -> Unit,
+    onResumeClick: () -> Unit,
+    onStopClick: () -> Unit,
+    onSkipClick: () -> Unit
+) {
+    when (uiState.timerState) {
+        is TimerState.Idle, is TimerState.Completed -> {
+            PomodoroButton(
+                text = stringResource(R.string.start),
+                onClick = onStartClick,
+                modifier = Modifier.fillMaxWidth(0.8f),
+                backgroundColor = animatedPrimaryColor
+            )
+        }
+        is TimerState.Running -> {
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                modifier = Modifier.fillMaxWidth(0.9f)
+            ) {
+                PomodoroButton(
+                    text = stringResource(R.string.pause),
+                    onClick = onPauseClick,
+                    backgroundColor = animatedPrimaryColor,
+                    modifier = Modifier.weight(1f)
+                )
+                PomodoroButton(
+                    text = stringResource(R.string.skip),
+                    onClick = onSkipClick,
+                    isPrimary = false,
+                    backgroundColor = modeColors.secondary,
+                    modifier = Modifier.weight(1f)
+                )
+            }
+        }
+        is TimerState.Paused -> {
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                modifier = Modifier.fillMaxWidth(0.9f)
+            ) {
+                PomodoroButton(
+                    text = stringResource(R.string.resume),
+                    onClick = onResumeClick,
+                    backgroundColor = animatedPrimaryColor,
+                    modifier = Modifier.weight(1f)
+                )
+                PomodoroButton(
+                    text = stringResource(R.string.stop),
+                    onClick = onStopClick,
+                    isPrimary = false,
+                    backgroundColor = modeColors.secondary,
+                    modifier = Modifier.weight(1f)
+                )
+            }
         }
     }
 }
@@ -357,3 +571,4 @@ private fun PermissionWarningBanner() {
         }
     }
 }
+
